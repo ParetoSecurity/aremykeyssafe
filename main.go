@@ -9,7 +9,7 @@ import (
 
 func getSSHKeyLength(this js.Value, args []js.Value) interface{} {
 	key := args[0].String()
-	callback := args[len(inputs)-1:][0]
+	callback := args[len(args)-1:][0]
 	parsedKey, _, _, _, err := ssh.ParseAuthorizedKey([]byte(key))
 	if err != nil {
 		callback.Invoke(err, js.Null())
@@ -25,11 +25,11 @@ func getSSHKeyLength(this js.Value, args []js.Value) interface{} {
 	pub := pubCrypto.(*rsa.PublicKey)
 
 	callback.Invoke(js.Null(), pub.N.BitLen())
-	return
+	return nil
 }
 
 func main() {
 	block := make(chan bool)
-    js.Global().Set("getSSHKeyLength", js.FuncOf(getSSHKeyLength))
+	js.Global().Set("getSSHKeyLength", js.FuncOf(getSSHKeyLength))
 	<-block
 }
