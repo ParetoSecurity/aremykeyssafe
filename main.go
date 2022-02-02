@@ -8,8 +8,8 @@ import (
 )
 
 func getSSHKeyLength(this js.Value, args []js.Value) interface{} {
-	key := inputs[0].String()
-	callback := inputs[len(inputs)-1:][0]
+	key := args[0].String()
+	callback := args[len(inputs)-1:][0]
 	parsedKey, _, _, _, err := ssh.ParseAuthorizedKey([]byte(key))
 	if err != nil {
 		callback.Invoke(err, js.Null())
@@ -24,8 +24,8 @@ func getSSHKeyLength(this js.Value, args []js.Value) interface{} {
 	// Finally, we can convert back to an *rsa.PublicKey
 	pub := pubCrypto.(*rsa.PublicKey)
 
-	
 	callback.Invoke(js.Null(), pub.N.BitLen())
+	return
 }
 
 func main() {
