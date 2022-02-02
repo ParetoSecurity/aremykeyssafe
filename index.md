@@ -1,29 +1,35 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/teamniteo/aremykeyssafe/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
 ### POC
+<label for="key">Enter your ssh-rsa key:</label>
 
-https://go.dev/play/p/eOVZItZkLFZ
-
+<textarea disabled id="key" name="key"
+          rows="5" cols="33">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA8PmKyJdhN6/GaIWGJiK5a+bQMHVnpd23a26OLSor9bX15PP6JE2HE5DD2ekd4HkFESCGKW6CUkHbtBotq61NvbnqLfbzlRBOuoZQ9YYP1+NetR8ttWarDH8NvPEX8DAUA8uhoZ7Q/9VHhCo14KT8/YP53oAJfqIXxPsuixV8f/ORJcWyWpFobKRPQl7E592dmia9Il5SIcEKERttIvCl8YgFbpuSt18FP8ffe+1kNvD5AtOHsAZGaDlhouGZd83+lmAhxAi/0r2zWTCNtWJnH5er6Fqjtm5rgQEvIZTJb1BEK7r/pYxhgM9MBnIndawTNmoHP26fYztxa3LirH6Imw==</textarea>
+	  <button disabled id="check" value="Check">Check</button>
 <script src="go.js"></script>
 <script>
+	function getSSHKeyLengthPromise(msg) {
+	    return new Promise((resolve, reject) => {
+		getSSHKeyLength(msg, (err, message) => {
+		    if (err) {
+			reject(err);
+			return;
+		    }
+		    resolve(message);
+		});
+	    });
+	}
     async function init() {
 	const go = new Go();
 	let result = await WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject)
 	go.run(result.instance);
+	document.getElementById("check").disabled = false;
+	document.getElementById("key").disabled = false;
+	document.getElementById("check").addEventListener("click", async ()=> {
+		const key = document.getElementById("key").value;
+	        const length = await getSSHKeyLengthPromise(key);
+		document.getElementById("key").value = `Key size is ${length}`;
+		document.getElementById("check").disabled = true;
+		document.getElementById("key").disabled = true;
+	});
     }
     init();
 </script>
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/teamniteo/aremykeyssafe/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
