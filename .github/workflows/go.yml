@@ -1,0 +1,35 @@
+name: Go
+
+on:
+  push:
+    branches: [ wasm ]
+  pull_request:
+    branches: [ wasm ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Build
+      run: mkdir -p public
+      
+    - name: Build
+      run: GOOS=js GOARCH=wasm go build -ldflags="-s -w" -o public/main.wasm
+
+    - name: Copy env
+      run: cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" public/go.js
+      
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        keep_files: true
