@@ -50,6 +50,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const go = new Go();
         let result = await WebAssembly.instantiateStreaming(fetch("/wasm/main.wasm?" + Math.round(new Date().getTime() / 1000)), go.importObject)
         go.run(result.instance);
+        const user = new URLSearchParams(document.location.search).get("handle")
+        handle.value = user ? user : "";
 
         handle.disabled = false;
         handle.addEventListener("blur", async () => {
