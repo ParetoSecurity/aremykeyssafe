@@ -1,18 +1,10 @@
 # Are my SSH keys safe?
 
+<script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
 <label for="handle">Enter your GitHub or GitLab username:</label>
 <input id="handle" disabled name="handle" type="text" />
 <button disabled id="check" value="Check">Check</button>
 <ul id="results"></ul>
-
-<template id="result">
-  <li>
-    <span id="status"></span> <strong id="source"></strong> key <small id="key"></small> with size <strong id="size"><strong>
-  </li>
-</template>
-
-<script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
-<script src="/assets/js/main.js?{{ site.time | date: '%s%N' }}"></script>
 
 ## How this works
 
@@ -62,3 +54,11 @@ And then my friend would decrypt with this private key:
 ```shell
 echo "QiuCXo+KcW5JL3Lfg/ADlRELdc/nhifHp10A+5BxpNC58yGs9JPEy1DUjJK6kI3bvTOwbUwMMk+LJOMh+Xy+96kn59kYoU+AU4zfl5LGVQ2qJZJuBTwZySt4HTXWZhaK/VWXE65QU6k/beS6PW3/2nq0W5sM0tINy/hinto7sNqsHZTC38xlSckge48E5UoPnCujKJV84YmykZPoXm/nGB5TvQ1kORSrsha3Q0YRgAcMFrARDrBhnVa1Yt8sXOQGMrYx8giWUeiD0CYyl97Cbdle2CdUsnC5cJCkV9f7fMdFOJseaOX+RIa06kiMiQAbtrT7xUHBZ7E6b8J56lvYeg==" | base64 --decode | openssl rsautl -decrypt -inkey ~/.ssh/id_rsa
 ```
+
+<script src="/assets/js/main.js?{{ site.time | date: '%s%N' }}"></script>
+
+<template id="result">
+  <li>
+    <span id="status"></span> <strong id="source"></strong> key <small id="key"></small> with size <strong id="size"><strong>
+  </li>
+</template>
