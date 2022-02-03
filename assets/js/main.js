@@ -39,7 +39,7 @@ async function init() {
         handle.disabled = true;
         checkButton.disabled = true;
 
-        fetch(`/ cors / github / ${handle.value} `)
+        fetch(`/cors/github/${handle.value}`)
             .then(res => res.text())
             .then(text => text.split("\n"))
             .then(keys => keys.filter(key => key.startsWith("ssh-rsa")))
