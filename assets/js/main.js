@@ -1,18 +1,18 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
 
     function render(source, keys) {
         const results = document.getElementById("results");
         const template = document.getElementById("result");
         for (const key of keys) {
             const li = template.content.cloneNode(true);
-            li.querySelector("#status").textContent = `${key.size >= 2048 ? "✅" : "❌"}`;
+            li.querySelector("#status").textContent = kes.status;
             li.querySelector("#source").textContent = source;
             li.querySelector("#key").textContent = key.key;
             li.querySelector("#size").textContent = key.size;
             results.appendChild(li);
         }
     }
-    
+
     function getSSHKeyLengthPromise(msg) {
         return new Promise((resolve, reject) => {
             getSSHKeyLength(msg, (err, message) => {
@@ -24,7 +24,26 @@ document.addEventListener("DOMContentLoaded", function(){
             });
         });
     }
-    
+
+    async function parseKeys(keys) {
+        return await Promise.all(keys.map(async (key) => {
+            if (key.startsWith("ssh-ed25519")) {
+                return { "key": key, "size": 256, "status": "✅" }
+            }
+            if (key.startsWith("dsa")) {
+                return { "key": key, "size": 0, "status": "❌" }
+            }
+            if (key.startsWith("ecdsa")) {
+                return { "key": key, "size": 521, "status": "✅" }
+            }
+            if (key.startsWith("ssh-rsa")) {
+                let size = Number(await getSSHKeyLengthPromise(key));
+                return { "key": key, "size": size, "status": size >= 2048 ? "✅" : "❌" }
+            }
+            return { "key": key, "size": 0, "status": "❌" }
+        }))
+    }
+
     async function init() {
         const checkButton = document.getElementById("check");
         const handle = document.getElementById("handle");
@@ -44,26 +63,20 @@ document.addEventListener("DOMContentLoaded", function(){
             handle.disabled = true;
             checkButton.disabled = true;
             document.getElementById("results").innerHTML = '';
-    
+
             fetch(`/cors/github/${handle.value}`)
                 .then(res => res.text())
                 .then(text => text.split("\n"))
-                .then(keys => keys.filter(key => key.startsWith("ssh-rsa")))
-                .then(async (keys) => await Promise.all(keys.map(async (key) => {
-                    return { "key": key, "size": Number(await getSSHKeyLengthPromise(key)) }
-                })))
+                .then(async (keys) => await parseKeys(keys))
                 .then(keys => render("GitHub", keys))
                 .catch(err => {
                     console.error(err)
                 })
-    
+
             fetch(`/cors/gitlab/${handle.value}`)
                 .then(res => res.text())
                 .then(text => text.split("\n"))
-                .then(keys => keys.filter(key => key.startsWith("ssh-rsa")))
-                .then(async (keys) => await Promise.all(keys.map(async (key) => {
-                    return { "key": key, "size": Number(await getSSHKeyLengthPromise(key)) }
-                })))
+                .then(async (keys) => await parseKeys(keys))
                 .then(keys => render("GitLab", keys))
                 .catch(err => {
                     console.error(err)
