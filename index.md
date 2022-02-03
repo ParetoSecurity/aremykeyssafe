@@ -13,7 +13,7 @@ First, you must be aware that Github up and Gitlab publishes your public SSH key
 
 What this website does, it fetches those public keys, for Github that would be [https://github.com/dz0ny.keys](https://github.com/dz0ny.keys) and [https://gitlab.com/dz0ny.keys](https://gitlab.com/dz0ny.keys). Then a small [Golang application](https://github.com/teamniteo/aremykeyssafe/blob/wasm/main.go) is run as WebAssembly in your browser. This way even if you have an outdated key (we will talk about this in a bit) I won't know. 
 
-Bash alternative for this kind of check would be `ssh-keygen -l -f ~/.ssh/<public_key>.pub` if you wan't to run this agaisnt the entire company [Pareto Security](https://paretosecurity.com/security-checks/ssh-keys-strength) has this as one of the checks.
+Bash alternative for this kind of check would be `ssh-keygen -l -f ~/.ssh/<public_key>.pub` if you wan't to run this for the entire company [Pareto Security](https://paretosecurity.com/security-checks/ssh-keys-strength) has this as one of the checks.
 
 ## Outdated key?
 
