@@ -1,5 +1,13 @@
 
-   
+function render(keys) {
+    const results = document.getElementById("results");
+    for (const key of keys) {
+        let text = `${key.key} with size ${key.size} from Github is ${key.size >= 2048 ? ✅ : ❌ }`;
+        var li = document.createElement("li");
+        results.appendChild(document.createTextNode(text));
+    }
+}
+
 function getSSHKeyLengthPromise(msg) {
     return new Promise((resolve, reject) => {
         getSSHKeyLength(msg, (err, message) => {
@@ -13,21 +21,38 @@ function getSSHKeyLengthPromise(msg) {
 }
 
 async function init() {
+    const checkButton = document.getElementById("check");
+    const handle = document.getElementById("handle");
     const go = new Go();
     let result = await WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject)
     go.run(result.instance);
-    document.getElementById("check").disabled = false;
-    document.getElementById("key").disabled = false;
-    document.getElementById("check").addEventListener("click", async () => {
-        const key = document.getElementById("key").value;
-        const length = await getSSHKeyLengthPromise(key);
-        if (Number(length) >= 4096){
-            document.getElementById("key").value = `Key size is ${length}, you key is safe`;
+
+    handle.disabled = false;
+    handle.addEventListener("blur", async () => {
+        if (handle.value.length > 1) {
+            checkButton.disabled = false;
         }else{
-            document.getElementById("key").value = `Key size is ${length}, your key is not safe`;
+            checkButton.disabled = true;
         }
-        document.getElementById("check").disabled = true;
-        document.getElementById("key").disabled = true;
+    });
+    checkButton.addEventListener("click", async () => {
+        handle.disabled = true;
+        checkButton.disabled = true;
+
+        fetch(`/ cors / github / ${ handle.value } `)
+            .then(res => res.text())
+            .then(text => text.split("\n"))
+            .then(keys => keys.filter(key => key.startsWith("ssh-rsa")))
+            .then(async (keys) => await Promise.all(keys.map(async (key) => {
+                return { "key": key, "size": Number(await getSSHKeyLengthPromise(key)) }
+            })))
+            .then(render)
+            .catch(err => {
+                console.error(err)
+            })
+
+        handle.disabled = false;
+        checkButton.disabled = false;
     });
 }
 init();
