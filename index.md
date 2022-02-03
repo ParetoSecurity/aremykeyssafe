@@ -50,7 +50,7 @@ $ echo "this is my secret message" | openssl rsautl -encrypt -pubin -inkey zupo.
 QiuCXo+KcW5JL3Lfg/ADlRELdc/nhifHp10A+5BxpNC58yGs9JPEy1DUjJK6kI3bvTOwbUwMMk+LJOMh+Xy+96kn59kYoU+AU4zfl5LGVQ2qJZJuBTwZySt4HTXWZhaK/VWXE65QU6k/beS6PW3/2nq0W5sM0tINy/hinto7sNqsHZTC38xlSckge48E5UoPnCujKJV84YmykZPoXm/nGB5TvQ1kORSrsha3Q0YRgAcMFrARDrBhnVa1Yt8sXOQGMrYx8giWUeiD0CYyl97Cbdle2CdUsnC5cJCkV9f7fMdFOJseaOX+RIa06kiMiQAbtrT7xUHBZ7E6b8J56lvYeg==
 ```
 
-And then my friend would decode with:
+And then my friend would decrypt with this private key:
 
 ```shell
 echo "QiuCXo+KcW5JL3Lfg/ADlRELdc/nhifHp10A+5BxpNC58yGs9JPEy1DUjJK6kI3bvTOwbUwMMk+LJOMh+Xy+96kn59kYoU+AU4zfl5LGVQ2qJZJuBTwZySt4HTXWZhaK/VWXE65QU6k/beS6PW3/2nq0W5sM0tINy/hinto7sNqsHZTC38xlSckge48E5UoPnCujKJV84YmykZPoXm/nGB5TvQ1kORSrsha3Q0YRgAcMFrARDrBhnVa1Yt8sXOQGMrYx8giWUeiD0CYyl97Cbdle2CdUsnC5cJCkV9f7fMdFOJseaOX+RIa06kiMiQAbtrT7xUHBZ7E6b8J56lvYeg==" | base64 --decode | openssl rsautl -decrypt -inkey ~/.ssh/id_rsa
