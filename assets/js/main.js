@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const template = document.getElementById("result");
         for (const key of keys) {
             const li = template.content.cloneNode(true);
-            li.querySelector("#status").textContent = kes.status;
+            li.querySelector("#status").textContent = key.status;
             li.querySelector("#source").textContent = source;
             li.querySelector("#key").textContent = key.key;
             li.querySelector("#size").textContent = key.size;
@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function getSSHKeyLengthPromise(msg) {
+    function goPromise(fn, msg) {
         return new Promise((resolve, reject) => {
-            getSSHKeyLength(msg, (err, message) => {
+            fn(msg, (err, message) => {
                 if (err) {
                     reject(err);
                     return;
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return { "key": key, "size": 521, "status": "✅" }
             }
             if (key.startsWith("ssh-rsa")) {
-                let size = Number(await getSSHKeyLengthPromise(key));
+                let size = Number(await goPromise(getSSHKeyLength, key));
                 return { "key": key, "size": size, "status": size >= 2048 ? "✅" : "❌" }
             }
             return { "key": key, "size": 0, "status": "❌" }
