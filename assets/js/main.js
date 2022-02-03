@@ -2,7 +2,7 @@
 function render(keys) {
     const results = document.getElementById("results");
     for (const key of keys) {
-        let text = `${key.key} with size ${key.size} from Github is ${key.size >= 2048 ? "✅" : "❌"}`;
+        let text = `Key ${key.key} with size ${key.size} from Github is ${key.size >= 2048 ? "✅" : "❌"}`;
         var li = document.createElement("li");
         results.appendChild(document.createTextNode(text));
     }
