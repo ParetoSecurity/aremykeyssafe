@@ -1,4 +1,4 @@
-### POC
+### Are my SSH keys safe?
 <label for="key">Enter your ssh-rsa key:</label> Example is from https://github.com/dz0ny.keys
 
 <textarea disabled id="key" name="key"
