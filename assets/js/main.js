@@ -50,8 +50,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const go = new Go();
         let result = await WebAssembly.instantiateStreaming(fetch("/wasm/main.wasm?" + Math.round(new Date().getTime() / 1000)), go.importObject)
         go.run(result.instance);
+
         const user = new URLSearchParams(document.location.search).get("handle")
-        handle.value = user ? user : "";
+        if (user) {
+            handle.value = user;
+            checkButton.disabled = false;
+        }
+
 
         handle.disabled = false;
         handle.addEventListener("blur", async () => {
@@ -67,8 +72,8 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("results").innerHTML = '';
 
             fetch(`/cors/github/${handle.value}`)
-                .then(res => {
-                    const text = res.text()
+                .then(async (res) => {
+                    const text = await res.text()
                     // broken response
                     if (text.indexOf("html") !== -1) {
                         return "";
@@ -85,8 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             fetch(`/cors/gitlab/${handle.value}`)
-                .then(res => {
-                    const text = res.text()
+                .then(async (res) => {
+                    const text = await res.text()
                     // broken response
                     if (text.indexOf("html") !== -1) {
                         return "";
