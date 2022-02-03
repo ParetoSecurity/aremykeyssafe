@@ -1,11 +1,10 @@
 # Are my SSH keys safe?
-<label for="key">Enter your Gitlag or Github username:</label>
+<label for="key">Enter your Gitlab or Github username:</label>
 <input id="key" disabled name="key" type="text" />
-<div style="display: none">Results</div>
 <button disabled id="check" value="Check">Check</button>
 <ul id="results"></ul>
-<script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
-<script src="/assets/js/main.js?{{ site.time | date: '%s%N' }}"></script>
+<script src="/wasm/go.js"></script>
+<script src="/assets/js/main.js"></script>
 
 ## How this works
 
