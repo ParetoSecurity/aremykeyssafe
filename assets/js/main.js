@@ -1,20 +1,12 @@
-
-function renderGH(keys) {
+function render(source, keys) {
     const results = document.getElementById("results");
+    const template = document.getElementById("result");
     for (const key of keys) {
-        let text = `Key ${key.key} with size ${key.size} from GitHub is ${key.size >= 2048 ? "✅" : "❌"}`;
-        let li = document.createElement("li");
-        li.appendChild(document.createTextNode(text));
-        results.appendChild(li);
-    }
-}
-
-function renderGI(keys) {
-    const results = document.getElementById("results");
-    for (const key of keys) {
-        let text = `Key ${key.key} with size ${key.size} from GitLab is ${key.size >= 2048 ? "✅" : "❌"}`;
-        let li = document.createElement("li");
-        li.appendChild(document.createTextNode(text));
+        const li = template.content.cloneNode(true);
+        li.querySelector("#status").textContent = `${key.size >= 2048 ? "✅" : "❌"}`;
+        li.querySelector("#source").textContent = source;
+        li.querySelector("#key").textContent = key.key;
+        li.querySelector("#size").textContent = key.size;
         results.appendChild(li);
     }
 }
@@ -49,6 +41,7 @@ async function init() {
     checkButton.addEventListener("click", async () => {
         handle.disabled = true;
         checkButton.disabled = true;
+        document.getElementById("results").innerHTML = '';
 
         fetch(`/cors/github/${handle.value}`)
             .then(res => res.text())
@@ -57,10 +50,11 @@ async function init() {
             .then(async (keys) => await Promise.all(keys.map(async (key) => {
                 return { "key": key, "size": Number(await getSSHKeyLengthPromise(key)) }
             })))
-            .then(renderGH)
+            .then(keys => render("GitHub", keys))
             .catch(err => {
                 console.error(err)
             })
+
         fetch(`/cors/gitlab/${handle.value}`)
             .then(res => res.text())
             .then(text => text.split("\n"))
@@ -68,7 +62,7 @@ async function init() {
             .then(async (keys) => await Promise.all(keys.map(async (key) => {
                 return { "key": key, "size": Number(await getSSHKeyLengthPromise(key)) }
             })))
-            .then(renderGI)
+            .then(keys => render("GitHub", keys))
             .catch(err => {
                 console.error(err)
             })

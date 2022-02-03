@@ -4,6 +4,13 @@
 <input id="handle" disabled name="handle" type="text" />
 <button disabled id="check" value="Check">Check</button>
 <ul id="results"></ul>
+
+<template id="result">
+  <li>
+    <span id="status"></span> <strong id="source"></strong> key <small id="key"></small> with size <strong id="size"><strong>
+  </li>
+</template>
+
 <script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
 <script src="/assets/js/main.js?{{ site.time | date: '%s%N' }}"></script>
 
