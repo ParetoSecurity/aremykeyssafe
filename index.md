@@ -1,5 +1,5 @@
 # Are my SSH keys safe?
-
+<script defer data-domain="aremykeyssafe.com" src="https://plausible.io/js/plausible.js"></script>
 <script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
 <label for="handle">Enter your GitHub or GitLab username:</label>
 <input id="handle" disabled name="handle" type="text" />
