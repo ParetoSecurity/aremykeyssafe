@@ -1,5 +1,5 @@
 # Are my SSH keys safe?
-<label for="key">Enter your Gitlag or Github username:</label>
+<label for="key">Enter your GitHub or GitLab username:</label>
 <input id="key" disabled name="key" type="text" />
 <div style="display: none">Results</div>
 <button disabled id="check" value="Check">Check</button>
@@ -9,15 +9,15 @@
 
 ## How this works
 
-First, you must be aware that Github up and Gitlab publishes your public SSH keys, and that means all SSH keys you registered with them. This itself is not problematic and it's useful if you want to send someone an encrypted message or add SSH keys to the authorized list on some device. 
+First, you must know that GitHub and GitLab publish your public SSH keys, which means all SSH keys you registered with them. This in itself is not an issue, and it's useful if you want to send someone an encrypted message or add SSH keys to the authorized list on some device. 
 
-What this website does, it fetches those public keys, for Github that would be [https://github.com/dz0ny.keys](https://github.com/dz0ny.keys) and [https://gitlab.com/dz0ny.keys](https://gitlab.com/dz0ny.keys). Then a small [Golang application](https://github.com/teamniteo/aremykeyssafe/blob/wasm/main.go) is run as WebAssembly in your browser. This way even if you have an outdated key (we will talk about this in a bit) I won't know. 
+This website fetches those public keys and analyzes them. On GitHub that could be [https://github.com/dz0ny.keys](https://github.com/dz0ny.keys) and on GitLab [https://gitlab.com/dz0ny.keys](https://gitlab.com/dz0ny.keys). Then a small [Golang application](https://github.com/teamniteo/aremykeyssafe/blob/wasm/main.go) is run as WebAssembly in your browser. This way, even if you have an outdated key (we will talk about this below), I won't know. 
 
-Bash alternative for this kind of check would be `ssh-keygen -l -f ~/.ssh/<public_key>.pub` if you wan't to run this for the entire company [Pareto Security](https://paretosecurity.com/security-checks/ssh-keys-strength) has this as one of the checks.
+Bash alternative for this kind of check would be `ssh-keygen -l -f ~/.ssh/<public_key>.pub` if you want to run this for the entire company [Pareto Security](https://paretosecurity.com/security-checks/ssh-keys-strength) has this as one of the checks.
 
 ## Outdated key?
 
-How SSH keys can be outdated? Well in my case when I started programming 15 years ago, the default key size for an RSA key was 1024 bytes, and I had that key following me around for a long time. These days if you want to pass the CIS or SOC 2 compliance, you need strong keys. 
+How can SSH keys be outdated? When I started programming 15 years ago, the default key size for an RSA key was 1024 bytes, and I had that key following me around for a long time. These days if you want to pass the CIS or SOC 2 compliance, you need stronger keys. 
 
 ## What are recommended key sizes
 
@@ -25,8 +25,8 @@ Recommended key sizes are as follows:
 
 - For the RSA algorithm at least 2048, recommended 4096
 - The DSA algorithm should not be used
-- For the ECDSA algorithm it should be 521
-- For the ED25519 the key size should be 256 or larger
+- For the ECDSA algorithm, it should be 521
+- For the ED25519, the key size should be 256 or larger
 
 Sources [NIST](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-57pt3r1.pdf), [SSH Academy](https://www.ssh.com/academy/ssh/keygen#choosing-an-algorithm-and-key-size).
 
@@ -36,11 +36,11 @@ The [Github docs](https://docs.github.com/en/authentication/connecting-to-github
 
 ## Don't be E-Corp
 
-Semi inspired by this scene, where no keys were used at all. 
+Semi-inspired by this scene where no keys were used. 
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/T4w6rloFpCI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Bonus: Send someone an encryped message
+## Bonus: Send someone an encrypted message
 
 Build the message:
 ```bash
