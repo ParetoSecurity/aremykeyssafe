@@ -1,7 +1,7 @@
 # Are my SSH keys safe?
+
 <label for="key">Enter your GitHub or GitLab username:</label>
 <input id="key" disabled name="key" type="text" />
-<div style="display: none">Results</div>
 <button disabled id="check" value="Check">Check</button>
 <ul id="results"></ul>
 <script src="/wasm/go.js"></script>

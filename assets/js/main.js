@@ -2,7 +2,7 @@
 function render(keys) {
     const results = document.getElementById("results");
     for (const key of keys) {
-        let text = `${key.key} with size ${key.size} from Github is ${key.size >= 2048 ? "✅": "❌"}`;
+        let text = `${key.key} with size ${key.size} from Github is ${key.size >= 2048 ? "✅" : "❌"}`;
         var li = document.createElement("li");
         results.appendChild(document.createTextNode(text));
     }
@@ -24,14 +24,14 @@ async function init() {
     const checkButton = document.getElementById("check");
     const handle = document.getElementById("handle");
     const go = new Go();
-    let result = await WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject)
+    let result = await WebAssembly.instantiateStreaming(fetch("/wasm/main.wasm?" + Math.round(new Date().getTime() / 1000)), go.importObject)
     go.run(result.instance);
 
     handle.disabled = false;
     handle.addEventListener("blur", async () => {
         if (handle.value.length > 1) {
             checkButton.disabled = false;
-        }else{
+        } else {
             checkButton.disabled = true;
         }
     });
@@ -39,7 +39,7 @@ async function init() {
         handle.disabled = true;
         checkButton.disabled = true;
 
-        fetch(`/ cors / github / ${ handle.value } `)
+        fetch(`/ cors / github / ${handle.value} `)
             .then(res => res.text())
             .then(text => text.split("\n"))
             .then(keys => keys.filter(key => key.startsWith("ssh-rsa")))
