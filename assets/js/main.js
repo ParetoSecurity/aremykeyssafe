@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (key.startsWith("ssh-rsa")) {
                 let size = Number(await goPromise(getSSHKeyLength, key));
-                return { "key": key, "size": size, "status": size >= 2048 ? "✅" : "❌" }
+                return { "key": key, "size": size, "status": size >= 2048 ? size >= 4096 ? "✅" : "🍄" : "❌" }
             }
             return { "key": key, "size": 0, "status": "❌" }
         }))

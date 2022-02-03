@@ -7,6 +7,13 @@
 <button disabled id="check" value="Check">Check</button>
 <ul id="results"></ul>
 
+
+<ul id="legend">
+<li>✅ - Key is safe</li>
+<li>🍄 - Fine, but not recommended</li>
+<li>❌ - Key needs to be replaced</li>
+</ul>
+
 ## How this works
 
 First, you must know that GitHub and GitLab publish your public SSH keys, which means all SSH keys you registered with them. This in itself is not an issue, and it's useful if you want to send someone an encrypted message or add SSH keys to the authorized list on some device. 
