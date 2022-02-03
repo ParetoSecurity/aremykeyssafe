@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 .then(async (keys) => await Promise.all(keys.map(async (key) => {
                     return { "key": key, "size": Number(await getSSHKeyLengthPromise(key)) }
                 })))
-                .then(keys => render("GitHub", keys))
+                .then(keys => render("GitLab", keys))
                 .catch(err => {
                     console.error(err)
                 })
