@@ -65,19 +65,34 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("results").innerHTML = '';
 
             fetch(`/cors/github/${handle.value}`)
-                .then(res => res.text())
+                .then(res => {
+                    const text = res.text()
+                    // broken response
+                    if (text.indexOf("html") !== -1) {
+                        return "";
+                    }
+                    return text
+                })
                 .then(text => text.split("\n"))
-                .then(keys => keys.filter(key=>key.length>8))
+                .then(keys => keys.filter(key => key.length > 8))
                 .then(async (keys) => await parseKeys(keys))
-                .then(keys => render("GitHub", keys))
                 .catch(err => {
                     console.error(err)
                 })
+                .then(keys => render("GitHub", keys))
+
 
             fetch(`/cors/gitlab/${handle.value}`)
-                .then(res => res.text())
+                .then(res => {
+                    const text = res.text()
+                    // broken response
+                    if (text.indexOf("html") !== -1) {
+                        return "";
+                    }
+                    return text
+                })
                 .then(text => text.split("\n"))
-                .then(keys => keys.filter(key=>key.length>8))
+                .then(keys => keys.filter(key => key.length > 8))
                 .then(async (keys) => await parseKeys(keys))
                 .then(keys => render("GitLab", keys))
                 .catch(err => {
