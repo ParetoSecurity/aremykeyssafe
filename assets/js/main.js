@@ -1,10 +1,21 @@
 
-function render(keys) {
+function renderGH(keys) {
     const results = document.getElementById("results");
     for (const key of keys) {
-        let text = `Key ${key.key} with size ${key.size} from Github is ${key.size >= 2048 ? "✅" : "❌"}`;
-        var li = document.createElement("li");
-        results.appendChild(document.createTextNode(text));
+        let text = `Key ${key.key} with size ${key.size} from GitHub is ${key.size >= 2048 ? "✅" : "❌"}`;
+        let li = document.createElement("li");
+        li.appendChild(document.createTextNode(text));
+        results.appendChild(li);
+    }
+}
+
+function renderGI(keys) {
+    const results = document.getElementById("results");
+    for (const key of keys) {
+        let text = `Key ${key.key} with size ${key.size} from GitLab is ${key.size >= 2048 ? "✅" : "❌"}`;
+        let li = document.createElement("li");
+        li.appendChild(document.createTextNode(text));
+        results.appendChild(li);
     }
 }
 
@@ -46,11 +57,21 @@ async function init() {
             .then(async (keys) => await Promise.all(keys.map(async (key) => {
                 return { "key": key, "size": Number(await getSSHKeyLengthPromise(key)) }
             })))
-            .then(render)
+            .then(renderGH)
             .catch(err => {
                 console.error(err)
             })
-
+        fetch(`/cors/gitlab/${handle.value}`)
+            .then(res => res.text())
+            .then(text => text.split("\n"))
+            .then(keys => keys.filter(key => key.startsWith("ssh-rsa")))
+            .then(async (keys) => await Promise.all(keys.map(async (key) => {
+                return { "key": key, "size": Number(await getSSHKeyLengthPromise(key)) }
+            })))
+            .then(renderGI)
+            .catch(err => {
+                console.error(err)
+            })
         handle.disabled = false;
         checkButton.disabled = false;
     });
