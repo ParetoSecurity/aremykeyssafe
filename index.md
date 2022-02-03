@@ -66,7 +66,5 @@ echo "QiuCXo+KcW5JL3Lfg/ADlRELdc/nhifHp10A+5BxpNC58yGs9JPEy1DUjJK6kI3bvTOwbUwMMk
 <script src="/assets/js/main.js?{{ site.time | date: '%s%N' }}"></script>
 
 <template id="result">
-  <li>
-    <span id="status"></span> <strong id="source"></strong> key <small id="key"></small> with size <strong id="size"><strong>
-  </li>
+<li><span id="status"></span> <strong id="source"></strong> key <small id="key"></small> with size <strong id="size"></strong></li>
 </template>
