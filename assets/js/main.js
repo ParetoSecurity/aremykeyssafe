@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
             fetch(`/cors/github/${handle.value}`)
                 .then(res => res.text())
                 .then(text => text.split("\n"))
+                .then(keys => keys.filter(key=>key.length>8))
                 .then(async (keys) => await parseKeys(keys))
                 .then(keys => render("GitHub", keys))
                 .catch(err => {
@@ -76,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
             fetch(`/cors/gitlab/${handle.value}`)
                 .then(res => res.text())
                 .then(text => text.split("\n"))
+                .then(keys => keys.filter(key=>key.length>8))
                 .then(async (keys) => await parseKeys(keys))
                 .then(keys => render("GitLab", keys))
                 .catch(err => {
