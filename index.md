@@ -4,8 +4,8 @@
 <div style="display: none">Results</div>
 <button disabled id="check" value="Check">Check</button>
 <ul id="results"></ul>
-<script src="/wasm/go.js"></script>
-<script src="/assets/js/main.js"></script>
+<script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
+<script src="/assets/js/main.js?{{ site.time | date: '%s%N' }}"></script>
 
 ## How this works
 
