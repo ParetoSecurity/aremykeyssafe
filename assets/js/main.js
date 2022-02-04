@@ -28,13 +28,15 @@ document.addEventListener("DOMContentLoaded", function () {
     async function parseKeys(keys) {
         return await Promise.all(keys.map(async (key) => {
             if (key.startsWith("ssh-ed25519")) {
-                return { "key": key, "size": 256, "status": "✅" }
+                let size = Number(await goPromise(getSSHKeyLength, key));
+                return { "key": key, "size": size, "status": size >= 256 ? "✅" : "❌" }
             }
             if (key.startsWith("dsa")) {
                 return { "key": key, "size": 0, "status": "❌" }
             }
             if (key.startsWith("ecdsa")) {
-                return { "key": key, "size": 521, "status": "✅" }
+                let size = Number(await goPromise(getSSHKeyLength, key));
+                return { "key": key, "size": size, "status": size == 521 ? "✅" : "❌" }
             }
             if (key.startsWith("ssh-rsa")) {
                 let size = Number(await goPromise(getSSHKeyLength, key));
@@ -48,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const checkButton = document.getElementById("check");
         const handle = document.getElementById("handle");
         const go = new Go();
-        let result = await WebAssembly.instantiateStreaming(fetch("/wasm/main.wasm?" + Math.round(new Date().getTime() / 1000)), go.importObject)
+        let result = await WebAssembly.instantiateStreaming(fetch("/wasm/main.wasm?v2"), go.importObject)
         go.run(result.instance);
 
         const user = new URLSearchParams(document.location.search).get("handle")
