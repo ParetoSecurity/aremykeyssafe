@@ -6,11 +6,16 @@ import (
 	"crypto/rsa"
 	"encoding/binary"
 	"errors"
+	"strings"
 
 	"golang.org/x/crypto/ssh"
 )
 
 func Decode(key string) (int, error) {
+
+	if strings.HasPrefix(key, "sk-") {
+		return 8000, nil
+	}
 	parsedKey, _, _, _, err := ssh.ParseAuthorizedKey([]byte(key))
 	if err != nil {
 		return 0, err
