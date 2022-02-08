@@ -1,10 +1,13 @@
-# Are my SSH keys safe?
+# Are my keys safe?
 
 <script defer data-domain="aremykeyssafe.com" src="https://plausible.io/js/plausible.js"></script>
 <script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
-<label for="handle">Enter your GitHub or GitLab username:</label>
-<input id="handle" disabled name="handle" type="text" />
-<button disabled id="check" value="Check">Check</button>
+
+<p style="font-size: 120%">
+  <label for="handle">Enter your GitHub or GitLab username:</label>
+  <input id="handle" disabled name="handle" type="text" />
+  <button disabled id="check" value="Check">Check</button>
+</p>
 <ul id="results"></ul>
 
 <h4>Legend</h4>
@@ -14,7 +17,7 @@
 <li>❌ - Key needs to be replaced</li>
 </ul>
 
-## How this works
+## How does this work?
 
 First, you must know that GitHub and GitLab publish your public SSH keys, which means all SSH keys you registered with them. This in itself is not an issue, and it's useful if you want to send someone an encrypted message or add SSH keys to the authorized list on some device. 
 
