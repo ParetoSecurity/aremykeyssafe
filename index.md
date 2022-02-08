@@ -23,7 +23,7 @@ First, you must know that GitHub and GitLab publish your public SSH keys, which 
 
 This website fetches those public keys and analyzes them. On GitHub that could be [https://github.com/dz0ny.keys](https://github.com/dz0ny.keys) and on GitLab [https://gitlab.com/dz0ny.keys](https://gitlab.com/dz0ny.keys). Then a small [Golang application](https://github.com/paretosecurity/aremykeyssafe/blob/wasm/main.go) is run as WebAssembly in your browser. This way, even if you have an outdated key (we will talk about this below), I won't know.
 
-Bash alternative for this kind of check would be `ssh-keygen -l -f ~/.ssh/<public_key>.pub` if you want to run this for the entire company [Pareto Security](https://paretosecurity.com/security-checks/ssh-keys-strength) has this as one of the checks.
+Bash alternative for this kind of check would be `ssh-keygen -l -f ~/.ssh/<public_key>.pub`.
 
 ## Outdated key?
 
