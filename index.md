@@ -7,8 +7,8 @@
 <button disabled id="check" value="Check">Check</button>
 <ul id="results"></ul>
 
-
-<ul id="legend">
+<h4>Legend</h4>
+<ul id="legend" style="font-size: 80%">
 <li>✅ - Key is safe</li>
 <li>🍄 - Fine, but not recommended</li>
 <li>❌ - Key needs to be replaced</li>
@@ -18,7 +18,7 @@
 
 First, you must know that GitHub and GitLab publish your public SSH keys, which means all SSH keys you registered with them. This in itself is not an issue, and it's useful if you want to send someone an encrypted message or add SSH keys to the authorized list on some device. 
 
-This website fetches those public keys and analyzes them. On GitHub that could be [https://github.com/dz0ny.keys](https://github.com/dz0ny.keys) and on GitLab [https://gitlab.com/dz0ny.keys](https://gitlab.com/dz0ny.keys). Then a small [Golang application](https://github.com/teamniteo/aremykeyssafe/blob/wasm/main.go) is run as WebAssembly in your browser. This way, even if you have an outdated key (we will talk about this below), I won't know. 
+This website fetches those public keys and analyzes them. On GitHub that could be [https://github.com/dz0ny.keys](https://github.com/dz0ny.keys) and on GitLab [https://gitlab.com/dz0ny.keys](https://gitlab.com/dz0ny.keys). Then a small [Golang application](https://github.com/paretosecurity/aremykeyssafe/blob/wasm/main.go) is run as WebAssembly in your browser. This way, even if you have an outdated key (we will talk about this below), I won't know.
 
 Bash alternative for this kind of check would be `ssh-keygen -l -f ~/.ssh/<public_key>.pub` if you want to run this for the entire company [Pareto Security](https://paretosecurity.com/security-checks/ssh-keys-strength) has this as one of the checks.
 
