@@ -42,7 +42,7 @@ Sources [NIST](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800
 
 ## What should I do if my keys are reported as outdated? 
 
-The [Github docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) have a great guide that you can follow. TLDR: the ED25519 should be used whenever possible.
+The [GitHub docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) have a great guide that you can follow. TLDR: the ED25519 should be used whenever possible.
 
 ## Don't be E-Corp
 
