@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
             checkButton.disabled = false;
 
             const url = new URL(window.location);
-            url.searchParams.set('handle', handle);
+            url.searchParams.set('handle', handle.value);
             window.history.pushState({}, '', url);
         });
     }
