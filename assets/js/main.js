@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    function render(source, keys) {
+    function render(sourceUrl, source, keys) {
         const results = document.getElementById("results");
         const template = document.getElementById("result");
         for (const key of keys) {
             const li = template.content.cloneNode(true);
             li.querySelector("#status").textContent = key.status;
             li.querySelector("#source").textContent = source;
+            li.querySelector("#source").setAttribute("href", sourceUrl);
             li.querySelector("#key").textContent = key.key;
             li.querySelector("#size").textContent = key.size;
             results.appendChild(li);
@@ -88,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(err => {
                     console.error(err)
                 })
-                .then(keys => render("GitHub", keys))
+                .then(keys => render(`https://github.com/${handle.value}.keys`, "GitHub", keys))
 
 
             fetch(`/cors/gitlab/${handle.value}`)
@@ -103,12 +104,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(text => text.split("\n"))
                 .then(keys => keys.filter(key => key.length > 8))
                 .then(async (keys) => await parseKeys(keys))
-                .then(keys => render("GitLab", keys))
+                .then(keys => render(`https://gitlab.com/${handle.value}.keys`, "GitLab", keys))
                 .catch(err => {
                     console.error(err)
                 })
             handle.disabled = false;
             checkButton.disabled = false;
+
+            const url = new URL(window.location);
+            url.searchParams.set('handle', handle);
+            window.history.pushState({}, '', url);
         });
     }
     init();
