@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }))
     }
     async function onEdit() {
+        const checkButton = document.getElementById("check");
         const handle = document.getElementById("handle");
         if (handle.value.length > 1) {
             checkButton.disabled = false;

@@ -3,8 +3,7 @@
 <script defer data-domain="aremykeyssafe.com" src="https://plausible.io/js/plausible.js"></script>
 <script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
 
-<p style="font-size: 120%">
-  <label for="handle">Enter your GitHub or GitLab username:</label>
+<p class="search-api">
   <input id="handle" disabled name="handle" type="text" />
   <button disabled id="check" value="Check">Check</button>
 </p>

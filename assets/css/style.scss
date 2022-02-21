@@ -6,3 +6,18 @@
 footer {
   display: none !important;
 }
+
+button {
+  color: rgb(21 146 95 / 59%);
+  background-color: #0099991f;
+  border-color: rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+.search-api {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 2rem;
+}
