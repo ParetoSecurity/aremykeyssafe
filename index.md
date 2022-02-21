@@ -8,7 +8,7 @@
   <button disabled id="check" value="Check">Check</button>
 </p>
 <ul id="results"></ul>
-<p id="searching" style="display:none;">Fetching information...</p>
+<div id="searching" style="display:none;" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 <h4>Legend</h4>
 <ul id="legend" style="font-size: 80%">
 <li>✅ - Key is safe</li>

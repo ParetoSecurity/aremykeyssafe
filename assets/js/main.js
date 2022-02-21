@@ -115,8 +115,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const url = new URL(window.location);
             url.searchParams.set('handle', handle.value);
             window.history.pushState({}, '', url);
-            results.style.display = 'block';
-            searching.style.display = 'none';
+            setTimeout(() => {
+                results.style.display = 'block';
+                searching.style.display = 'none';
+            }, 1000);
         });
 
 
