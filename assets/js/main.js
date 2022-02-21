@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }))
     }
     async function onEdit() {
+        const handle = document.getElementById("handle");
         if (handle.value.length > 1) {
             checkButton.disabled = false;
         } else {
@@ -63,6 +64,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function runChecks() {
+        const checkButton = document.getElementById("check");
+        const handle = document.getElementById("handle");
         handle.disabled = true;
         checkButton.disabled = true;
         document.getElementById("results").innerHTML = 'Getting information...';
