@@ -71,3 +71,7 @@ echo "QiuCXo+KcW5JL3Lfg/ADlRELdc/nhifHp10A+5BxpNC58yGs9JPEy1DUjJK6kI3bvTOwbUwMMk
 <template id="result">
 <li><span id="status"></span> <a href="#" id="source"></a> key <small id="key"></small> with size <strong id="size"></strong></li>
 </template>
+
+<template id="no-result">
+<li>No supported keys were found on <span id="source"></span>.</li>
+</template>
