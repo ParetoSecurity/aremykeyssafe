@@ -4,11 +4,11 @@
 <script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
 
 <p class="search-api">
-  <input id="handle" disabled name="handle" type="text" />
+  <input placeholder="GitHub or GitLab username" id="handle" disabled name="handle" type="text" />
   <button disabled id="check" value="Check">Check</button>
 </p>
 <ul id="results"></ul>
-
+<p class="searching" style="display:none;">Fetching information...</p>
 <h4>Legend</h4>
 <ul id="legend" style="font-size: 80%">
 <li>✅ - Key is safe</li>

@@ -11,7 +11,7 @@ button {
   color: rgba(21, 146, 95, 0.59);
   background-color: rgba(0, 153, 153, 0.122);
   border-color: rgba(255, 255, 255, 0.2);
-  padding: 1rem;
+  padding: 0.4rem;
   border-radius: 0.3rem;
   transition: color 0.2s, background-color 0.2s, border-color 0.2s;
 }
@@ -20,4 +20,11 @@ button {
   font-size: 1.2rem;
   text-align: center;
   padding: 2rem;
+}
+
+.search-api input {
+  border-color: rgba(0, 153, 153, 0.122);
+  padding: 0.4rem;
+  border-radius: 0.3rem;
+  width: 35%;
 }

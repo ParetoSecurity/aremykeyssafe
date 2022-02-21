@@ -67,11 +67,14 @@ document.addEventListener("DOMContentLoaded", function () {
     async function runChecks() {
         const checkButton = document.getElementById("check");
         const handle = document.getElementById("handle");
+        const results = document.getElementById("results");
+        const searching = document.getElementById("searching");
         handle.disabled = true;
         checkButton.disabled = true;
-        document.getElementById("results").innerHTML = 'Getting information...';
-
-        fetch(`/cors/github/${handle.value}`)
+        results.innerHTML = '';
+        results.style.display = 'none';
+        searching.style.display = 'block';
+        const ghFetch = fetch(`/cors/github/${handle.value}`)
             .then(async (res) => {
                 const text = await res.text()
                 // broken response
@@ -89,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(keys => keys.length ? render(`https://github.com/${handle.value}.keys`, "GitHub", keys) : noResults("GitHub"))
 
 
-        fetch(`/cors/gitlab/${handle.value}`)
+        const giFetch = fetch(`/cors/gitlab/${handle.value}`)
             .then(async (res) => {
                 const text = await res.text()
                 // broken response
@@ -105,12 +108,18 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(err => {
                 console.error(err)
             })
-        handle.disabled = false;
-        checkButton.disabled = false;
 
-        const url = new URL(window.location);
-        url.searchParams.set('handle', handle.value);
-        window.history.pushState({}, '', url);
+        Promise.all([ghFetch, giFetch]).then(() => {
+            handle.disabled = false;
+            checkButton.disabled = false;
+            const url = new URL(window.location);
+            url.searchParams.set('handle', handle.value);
+            window.history.pushState({}, '', url);
+            results.style.display = 'block';
+            searching.style.display = 'none';
+        });
+
+
     }
 
     async function init() {
