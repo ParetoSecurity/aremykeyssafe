@@ -15,7 +15,7 @@ func Test_decode(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.key, func(t *testing.T) {
-			got, err := Decode(tt.key)
+			got, _ , err := Decode(tt.key)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("decode() error = %v, wantErr %v", err, tt.wantErr)
 				return

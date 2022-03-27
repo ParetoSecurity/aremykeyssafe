@@ -13,9 +13,9 @@ import (
 func Decode(key string) (int, error) {
 	parsedKey, _, _, _, err := ssh.ParseAuthorizedKey([]byte(key))
 	if err != nil {
-		return 0, err
+		return 0, "", err
 	}
-
+	fingerprint := ssh.FingerprintLegacyMD5(parsedKey)
 	pubCrypto := parsedKey.(ssh.CryptoPublicKey).CryptoPublicKey()
 
 	var bitLen int
@@ -27,7 +27,7 @@ func Decode(key string) (int, error) {
 	case ed25519.PublicKey:
 		bitLen = binary.Size(pub) * 8
 	default:
-		return 0, errors.New("Unsuported")
+		return 0, "", errors.New("Unsuported")
 	}
-	return bitLen, nil
+	return bitLen, fingerprint, nil
 }
