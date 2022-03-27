@@ -10,7 +10,7 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-func Decode(key string) (int, error) {
+func Decode(key string) (int, string, error) {
 	parsedKey, _, _, _, err := ssh.ParseAuthorizedKey([]byte(key))
 	if err != nil {
 		return 0, "", err
