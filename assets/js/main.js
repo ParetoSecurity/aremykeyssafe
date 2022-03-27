@@ -39,18 +39,18 @@ document.addEventListener("DOMContentLoaded", function () {
         return await Promise.all(keys.map(async (key) => {
             if (key.startsWith("ssh-ed25519")) {
                 let decoded = await goPromise(getSSHKeyLength, key);
-                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": size >= 256 ? "✅" : "❌" }
+                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": decoded.size >= 256 ? "✅" : "❌" }
             }
             if (key.startsWith("dsa")) {
                 return { "key": key, "size": 0, "fingerprint": key, "status": "❌" }
             }
             if (key.startsWith("ecdsa")) {
                 let decoded = await goPromise(getSSHKeyLength, key);
-                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": size == 521 ? "✅" : "❌" }
+                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": decoded.size == 521 ? "✅" : "❌" }
             }
             if (key.startsWith("ssh-rsa")) {
                 let decoded = await goPromise(getSSHKeyLength, key);
-                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": size >= 2048 ? size >= 4096 ? "✅" : "🍄" : "❌" }
+                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": decoded.size >= 2048 ? decoded.size >= 4096 ? "✅" : "🍄" : "❌" }
             }
             return { "key": key, "size": 0, "fingerprint": key, "status": "❌" }
         }))
