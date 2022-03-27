@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
             li.querySelector("#status").textContent = key.status;
             li.querySelector("#source").textContent = source;
             li.querySelector("#source").setAttribute("href", sourceUrl);
-            li.querySelector("#key").textContent = key.key;
+            li.querySelector("#key").setAttribute("title", key.key);
+            li.querySelector("#key").textContent = key.fingeprint;
             li.querySelector("#size").textContent = key.size;
             results.appendChild(li);
         }
@@ -24,12 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function goPromise(fn, msg) {
         return new Promise((resolve, reject) => {
-            fn(msg, (err, message) => {
+            fn(msg, (err, size, fingeprint) => {
                 if (err) {
                     reject(err);
                     return;
                 }
-                resolve(message);
+                resolve({ "size": Number(size), "fingeprint": fingeprint });
             });
         });
     }
@@ -37,21 +38,21 @@ document.addEventListener("DOMContentLoaded", function () {
     async function parseKeys(keys) {
         return await Promise.all(keys.map(async (key) => {
             if (key.startsWith("ssh-ed25519")) {
-                let size = Number(await goPromise(getSSHKeyLength, key));
-                return { "key": key, "size": size, "status": size >= 256 ? "✅" : "❌" }
+                let decoded = await goPromise(getSSHKeyLength, key);
+                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": size >= 256 ? "✅" : "❌" }
             }
             if (key.startsWith("dsa")) {
-                return { "key": key, "size": 0, "status": "❌" }
+                return { "key": key, "size": 0, "fingerprint": key, "status": "❌" }
             }
             if (key.startsWith("ecdsa")) {
-                let size = Number(await goPromise(getSSHKeyLength, key));
-                return { "key": key, "size": size, "status": size == 521 ? "✅" : "❌" }
+                let decoded = await goPromise(getSSHKeyLength, key);
+                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": size == 521 ? "✅" : "❌" }
             }
             if (key.startsWith("ssh-rsa")) {
-                let size = Number(await goPromise(getSSHKeyLength, key));
-                return { "key": key, "size": size, "status": size >= 2048 ? size >= 4096 ? "✅" : "🍄" : "❌" }
+                let decoded = await goPromise(getSSHKeyLength, key);
+                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": size >= 2048 ? size >= 4096 ? "✅" : "🍄" : "❌" }
             }
-            return { "key": key, "size": 0, "status": "❌" }
+            return { "key": key, "size": 0, "fingerprint": key, "status": "❌" }
         }))
     }
     async function onEdit() {
