@@ -1,4 +1,4 @@
-# Are my keys safe?
+# How long ago did you generate your SSH key?
 
 <script defer data-domain="aremykeyssafe.com" src="https://plausible.io/js/plausible.js"></script>
 <script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
