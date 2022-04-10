@@ -40,9 +40,9 @@ Recommended key sizes are as follows:
 Sources [NIST](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-57pt3r1.pdf), [SSH Academy](https://www.ssh.com/academy/ssh/keygen#choosing-an-algorithm-and-key-size).
 
 ### Since when is GitHub publishing my keys?!?
-This has been public knowledge for about a decade: https://changelog.com/posts/github-exposes-public-ssh-keys-for-its-users
+This has been public knowledge for about a decade: [changelog.com/posts/github-exposes-public-ssh-keys-for-its-users](https://changelog.com/posts/github-exposes-public-ssh-keys-for-its-users)
 
-Can it be use to cause harm? Yes, potentially. That is why you need to make sure your keys are using strong encryption by not having old keys laying around.
+Can it be used to cause harm? Yes, potentially. That is why you need to make sure your keys are using strong encryption by not having old keys laying around.
 
 The [GitHub docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) have a great guide that you can follow. TLDR: the ED25519 should be used whenever possible.
 
