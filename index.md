@@ -58,4 +58,4 @@ The [GitHub docs](https://docs.github.com/en/authentication/connecting-to-github
 <li>No supported keys were found on <span id="source"></span>.</li>
 </template>
 
-<a class="github-fork-ribbon" href="https://github.com/ParetoSecurity/aremykeyssafe" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+<a class="github-fork-ribbon fixed" href="https://github.com/ParetoSecurity/aremykeyssafe" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
