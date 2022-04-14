@@ -1,5 +1,6 @@
 ## Type in your GitHub or GitLab handle and click Check
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
 <script defer data-domain="aremykeyssafe.com" src="https://plausible.io/js/plausible.js"></script>
 <script src="/wasm/go.js?{{ site.time | date: '%s%N' }}"></script>
 
@@ -57,4 +58,4 @@ The [GitHub docs](https://docs.github.com/en/authentication/connecting-to-github
 <li>No supported keys were found on <span id="source"></span>.</li>
 </template>
 
-<a href="https://github.com/ParetoSecurity/aremykeyssafe"><img loading="lazy" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_orange_ff7600.png?resize=149%2C149" class="attachment-full size-full jetpack-lazy-image" alt="Fork me on GitHub" data-recalc-dims="1" data-lazy-src="https://github.blog/wp-content/uploads/2008/12/forkme_right_orange_ff7600.png?resize=149%2C149&is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><noscript><img loading="lazy" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_orange_ff7600.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></noscript></a>
+<a class="github-fork-ribbon" href="https://github.com/ParetoSecurity/aremykeyssafe" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
