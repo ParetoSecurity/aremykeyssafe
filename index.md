@@ -60,4 +60,6 @@ The [GitHub docs](https://docs.github.com/en/authentication/connecting-to-github
 
 <a class="github-fork-ribbon fixed" href="https://github.com/ParetoSecurity/aremykeyssafe" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
 
-<p>&nbsp;&nbsp;&nbsp;<a class="github-fork-ribbon fixed" href="https://github.com/ParetoSecurity/aremykeyssafe" data-ribbon="Fork me on GitHub"
+<p style="text-align:center; font-size:80%">&nbsp;&nbsp;&nbsp;Made with 💙 by folks at &lt;a href="https://paretosecurity.com/"&gt;Pareto Security&lt;/a&gt;.
+</p>                        
+                        
