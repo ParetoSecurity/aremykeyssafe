@@ -32,10 +32,10 @@ How can SSH keys be outdated? When I started programming 15 years ago, the defau
 
 Recommended key sizes are as follows:
 
-- For the RSA algorithm at least 2048, recommended 4096
-- The DSA algorithm should not be used
-- For the ECDSA algorithm, it should be 521
-- For the ED25519, the key size should be 256 or larger
+- For the RSA algorithm at least 2048, recommended 4096.
+- The DSA algorithm should not be used.
+- For the ECDSA algorithm, it should be 521.
+- For the ED25519, the key size should be 256 or larger.
 
 Sources [NIST](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-57pt3r1.pdf), [SSH Academy](https://www.ssh.com/academy/ssh/keygen#choosing-an-algorithm-and-key-size).
 
