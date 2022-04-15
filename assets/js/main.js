@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (key.startsWith("ecdsa")) {
                 let decoded = await goPromise(getSSHKeyLength, key);
                 let status = decoded.size == 521 ? "✅" : "❌";
-                if (key.includes("-nistp")) {
+                if (key.includes("-nistp") && decoded.size != 521) {
                     // https://stribika.github.io/2015/01/04/secure-secure-shell.html#:~:text=ECDH%20curve%20choice%3A%20This%20eliminates%209%2D11%20because%20NIST%20curves%20suck.%20They%20leak%20secrets%20through%20timing%20side%20channels%20and%20off%2Dcurve%20inputs.%20Also%2C%20NIST%20is%20considered%20harmful%20and%20cannot%20be%20trusted.
                     status = "🍄";
                 }
