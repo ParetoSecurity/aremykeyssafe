@@ -1,10 +1,9 @@
 package main
 
 import (
+	"aremykeyssafe/gpg"
 	"aremykeyssafe/ssh"
 	"syscall/js"
-
-	"github.com/ProtonMail/gopenpgp/v2/crypto"
 )
 
 func getSSHKeyLength(this js.Value, args []js.Value) interface{} {
@@ -21,11 +20,12 @@ func getSSHKeyLength(this js.Value, args []js.Value) interface{} {
 func getGPGExpired(this js.Value, args []js.Value) interface{} {
 	pubKey := args[0].String()
 	callback := args[len(args)-1:][0]
-	gpgKey, err := crypto.NewKeyFromArmored(pubKey)
+	expired, bitLen, keyType, err := gpg.Decode(pubKey)
 	if err != nil {
 		callback.Invoke(err, js.Null(), js.Null())
 	}
-	callback.Invoke(js.Null(), gpgKey.IsExpired())
+
+	callback.Invoke(js.Null(), expired, keyType, bitLen)
 	return nil
 }
 
