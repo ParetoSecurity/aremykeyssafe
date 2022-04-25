@@ -15,6 +15,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function renderGPG(sourceUrl, source, key) {
+        const results = document.getElementById("results");
+        const template = document.getElementById("resultGPG");
+ 
+        const li = template.content.cloneNode(true);
+        li.querySelector("#status").textContent = key.status;
+        li.querySelector("#source").textContent = source;
+        li.querySelector("#source").setAttribute("href", sourceUrl);
+        li.querySelector("#key").setAttribute("title", key.key);
+        results.appendChild(li);
+    
+    }
+
     function noResults(source) {
         const results = document.getElementById("results");
         const template = document.getElementById("no-result");
@@ -35,6 +48,23 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function goPromiseGPG(fn, msg) {
+        return new Promise((resolve, reject) => {
+            fn(msg, (err, expired) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve({ "expired": expired });
+            });
+        });
+    }
+
+    async function parseGPG(key) {
+        let decoded = await goPromiseGPG(getGPGExpired, key);
+        return { "key": key, "status": decoded.expired ? "⏰" : "✅" }
+    }
+
     async function parseKeys(keys) {
         return await Promise.all(keys.map(async (key) => {
             if (key.startsWith("ssh-ed25519")) {
@@ -51,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // https://stribika.github.io/2015/01/04/secure-secure-shell.html#:~:text=ECDH%20curve%20choice%3A%20This%20eliminates%209%2D11%20because%20NIST%20curves%20suck.%20They%20leak%20secrets%20through%20timing%20side%20channels%20and%20off%2Dcurve%20inputs.%20Also%2C%20NIST%20is%20considered%20harmful%20and%20cannot%20be%20trusted.
                     status = "🍄";
                 }
-                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status":  status}
+                return { "key": key, "size": decoded.size, "fingeprint": decoded.fingeprint, "status": status }
             }
             if (key.startsWith("ssh-rsa")) {
                 let decoded = await goPromise(getSSHKeyLength, key);
@@ -97,6 +127,21 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(keys => keys.length ? render(`https://github.com/${handle.value}.keys`, "GitHub", keys) : noResults("GitHub"))
 
+        const ghGPGFetch = fetch(`/cors/githubgpg/${handle.value}`)
+            .then(async (res) => {
+                const text = await res.text()
+                // broken response
+                if (text.indexOf("html") !== -1) {
+                    return "";
+                }
+                return text
+            })
+            .then(async (key) => await parseGPG(key))
+            .catch(err => {
+                console.error(err)
+            })
+            .then(key => key != "" ? renderGPG(`https://github.com/${handle.value}.gpg`, "GitHub GPG", key) : noResults("GitHub GPG"))
+
 
         const giFetch = fetch(`/cors/gitlab/${handle.value}`)
             .then(async (res) => {
@@ -115,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error(err)
             })
 
-        Promise.all([ghFetch, giFetch]).then(() => {
+        Promise.all([ghFetch, giFetch, ghGPGFetch]).then(() => {
             handle.disabled = false;
             checkButton.disabled = false;
             const url = new URL(window.location);
