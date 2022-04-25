@@ -17,16 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderGPG(sourceUrl, source, key) {
         const results = document.getElementById("results");
-        const template = document.getElementById("resultGPG");
-
+        const template = document.getElementById("result");
         const li = template.content.cloneNode(true);
         li.querySelector("#status").textContent = key.status;
         li.querySelector("#source").textContent = source;
         li.querySelector("#source").setAttribute("href", sourceUrl);
         li.querySelector("#key").setAttribute("title", key.key);
-        li.querySelector("#key").textContent = key.fingeprint;
+        li.querySelector("#key").textContent = key.keyType;
+        li.querySelector("#size").textContent = key.size;
         results.appendChild(li);
-
     }
 
     function noResults(source) {
@@ -51,22 +50,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function goPromiseGPG(fn, msg) {
         return new Promise((resolve, reject) => {
-            fn(msg, (err, expired, fingerprint) => {
+            fn(msg, (err, expired, keyType, bitLen) => {
                 if (err) {
                     reject(err);
                     return;
                 }
-                resolve({ "expired": expired, "fingerprint": fingerprint });
+                resolve({ "size": Number(bitLen), "expired": expired, "keyType": keyType });
             });
         });
     }
 
     async function parseGPG(key) {
         if (key.includes("This user hasn't uploaded any GPG keys")) {
-            return { "key": "", "fingerprint": key, "status": "🍪" }
+            return { "key": "", "keyType": "", "status": "🍪", "expired": false }
         }
         let decoded = await goPromiseGPG(getGPGExpired, key);
-        return { "key": key, "status": decoded.expired ? "⏰" : "✅", "fingerprint": decoded.fingerprint, }
+        var status = "⚙️"
+        if (decoded.keyType == "ed25519") {
+            status = decoded.size >= 256 ? "✅" : "❌"
+        }
+        if (decoded.keyType == "ecdsa") {
+            status = decoded.size == 521 ? "✅" : "❌";
+        }
+        if (decoded.keyType == "rsa") {
+            status = decoded.size >= 2048 ? decoded.size >= 4096 ? "✅" : "🍄" : "❌"
+        }
+        return { "key": key, "status": decoded.expired ? "⏰" : status, "keyType": decoded.keyType, "size": decoded.size }
     }
 
     async function parseKeys(keys) {
@@ -144,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(err => {
                 console.error(err)
             })
-            .then(key => key.key != "" ? renderGPG(`https://github.com/${handle.value}.gpg`, "GitHub GPG", key) : noResults("GitHub GPG"))
+            .then(key => key.key != "" ? renderGPG(`https://github.com/${handle.value}.gpg`, "GitHub public GPG", key) : noResults("GitHub GPG"))
 
 
         const giFetch = fetch(`/cors/gitlab/${handle.value}`)

@@ -59,10 +59,6 @@ The [GitHub docs](https://docs.github.com/en/authentication/connecting-to-github
 <li>No supported keys were found on <span id="source"></span>.</li>
 </template>
 
-<template id="resultGPG">
-<li><span id="status"></span> <a href="#" id="source"></a> public key <small id="key" data-hash="">GPG public key</small></li>
-</template>
-
 <a class="github-fork-ribbon fixed" href="https://github.com/ParetoSecurity/aremykeyssafe" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
 
 &nbsp;&nbsp;&nbsp;
