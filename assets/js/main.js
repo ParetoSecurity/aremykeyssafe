@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function parseGPG(key) {
-        if (key.includes("This user hasn't uploaded any GPG keys")) {
+        if (key.includes("This user hasn't uploaded any GPG keys") || key.includes("Note:")) {
             return { "key": "", "keyType": "", "status": "🍪", "expired": false }
         }
         let decoded = await goPromiseGPG(getGPGExpired, key);
