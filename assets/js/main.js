@@ -60,24 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    async function parseGPG(key) {
-        if (key.includes("This user hasn't uploaded any GPG keys") || key.includes("Note:")) {
-            return { "key": "", "keyType": "", "status": "🍪", "expired": false }
-        }
-        let decoded = await goPromiseGPG(getGPGExpired, key);
-        var status = "⚙️"
-        if (decoded.keyType == "ed25519") {
-            status = decoded.size >= 256 ? "✅" : "❌"
-        }
-        if (decoded.keyType == "ecdsa") {
-            status = decoded.size == 521 ? "✅" : "❌";
-        }
-        if (decoded.keyType == "rsa") {
-            status = decoded.size >= 2048 ? decoded.size >= 4096 ? "✅" : "🍄" : "❌"
-        }
-        return { "key": key, "status": decoded.expired ? "⏰" : status, "keyType": decoded.keyType, "size": decoded.size }
-    }
-
     async function parseKeys(keys) {
         return await Promise.all(keys.map(async (key) => {
             if (key.startsWith("ssh-ed25519")) {
@@ -139,21 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error(err)
             })
             .then(keys => keys.length ? render(`https://github.com/${handle.value}.keys`, "GitHub", keys) : noResults("GitHub"))
-
-        const ghGPGFetch = fetch(`/cors/githubgpg/${handle.value}`)
-            .then(async (res) => {
-                const text = await res.text()
-                // broken response
-                if (text.indexOf("html") !== -1) {
-                    return "";
-                }
-                return text
-            })
-            .then(async (key) => await parseGPG(key))
-            .catch(err => {
-                console.error(err)
-            })
-            .then(key => key.key != "" ? renderGPG(`https://github.com/${handle.value}.gpg`, "GitHub public GPG", key) : noResults("GitHub GPG"))
 
 
         const giFetch = fetch(`/cors/gitlab/${handle.value}`)
