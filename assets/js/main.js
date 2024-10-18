@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error(err)
             })
 
-        Promise.all([ghFetch, giFetch, ghGPGFetch]).then(() => {
+        Promise.all([ghFetch, giFetch]).then(() => {
             handle.disabled = false;
             checkButton.disabled = false;
             const url = new URL(window.location);
